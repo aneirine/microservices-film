@@ -4,6 +4,7 @@ import com.test.microservicefilm.models.CatalogItem;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -11,7 +12,8 @@ import java.util.List;
 public class MovieCatalogResource {
 
     public List<CatalogItem> getCatalog(String userId){
-
-        return null;
+        return Collections.singletonList(
+                new CatalogItem("Pirates", "New film about pirates", 4.6),
+        );
     }
 }
