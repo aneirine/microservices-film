@@ -1,4 +1,4 @@
-package com.test.microservicefilm.resoursces;
+package com.test.microservicefilm.resources;
 
 import com.test.microservicefilm.models.CatalogItem;
 import org.springframework.web.bind.annotation.PathVariable;
