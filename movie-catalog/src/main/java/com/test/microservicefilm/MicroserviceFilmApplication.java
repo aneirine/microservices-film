@@ -9,10 +9,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 @SpringBootApplication
 public class MicroserviceFilmApplication {
 
-    @Bean
-    public RestTemplate getRestTemplate() {
-        return new RestTemplate();
-    }
 
     @Bean
     public WebClient.Builder getWebClientBuilder(){
