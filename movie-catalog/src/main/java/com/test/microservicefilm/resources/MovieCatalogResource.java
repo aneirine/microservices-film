@@ -4,6 +4,7 @@ package com.test.microservicefilm.resources;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.test.microservicefilm.models.CatalogItem;
 import com.test.microservicefilm.models.Movie;
+import com.test.microservicefilm.models.Rating;
 import com.test.microservicefilm.models.UserRating;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,25 +33,35 @@ public class MovieCatalogResource {
     @RequestMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON)
     @HystrixCommand(fallbackMethod = "throwDefaultList")
     public List<CatalogItem> getCatalog(@PathVariable("userId") String userId) {
+        return getUserRating(userId).getUserRatings().stream().map(rating -> getCatalogItem(rating)).collect(Collectors.toList());
+    }
 
-        UserRating ratings = webClientBuilder.build()
-                .get().uri("http://movie-ratings-service/ratings/users/" + userId)
-                .retrieve()
-                .bodyToMono(UserRating.class)
-                .block();
+    @HystrixCommand(fallbackMethod = "throwDefaultCatalogItem")
+    private CatalogItem getCatalogItem(Rating rating) {
+        Movie movie = restTemplate.getForObject("http://movie-info-service/movies/" + rating.getMovieId(), Movie.class);
+        return new CatalogItem(movie.getName(), "test desc", rating.getRating());
+    }
 
-
-        return ratings.getUserRatings().stream().map(rating -> {
-                    Movie movie = restTemplate.getForObject("http://movie-info-service/movies/" + rating.getMovieId(), Movie.class);
-                    return new CatalogItem(movie.getName(), "test desc", rating.getRating());
-                }
-        ).collect(Collectors.toList());
-
+    @HystrixCommand(fallbackMethod = "throwDefaultUserRating")
+    private UserRating getUserRating(String userId) {
+        return webClientBuilder.build()
+                    .get().uri("http://movie-ratings-service/ratings/users/" + userId)
+                    .retrieve()
+                    .bodyToMono(UserRating.class)
+                    .block();
     }
 
     public List<CatalogItem> throwDefaultList(@PathVariable("userId") String userId) {
         return Collections.singletonList(
                 new CatalogItem("default", "default", 23.3)
         );
+    }
+
+    public UserRating throwDefaultUserRating(String userId){
+        return new UserRating(new ArrayList<>());
+    }
+
+    public CatalogItem throwDefaultCatalogItem(Rating rating){
+        return new CatalogItem("Default title", "Default desc", rating.getRating());
     }
 }
