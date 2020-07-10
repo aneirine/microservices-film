@@ -3,6 +3,7 @@ package com.test.microservicefilm.resources;
 import com.test.microservicefilm.models.CatalogItem;
 import com.test.microservicefilm.models.Movie;
 import com.test.microservicefilm.models.Rating;
+import com.test.microservicefilm.models.UserRating;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,12 +25,14 @@ public class MovieCatalogResource {
     @RequestMapping("/{userId}")
     public List<CatalogItem> getCatalog(@PathVariable("userId") String userId) {
 
-        List<Rating> ratings = Arrays.asList(
-                new Rating(1, 5.6),
-                new Rating(2, 7.8)
-        );
+        UserRating ratings = webClientBuilder.build()
+                .get()
+                .uri("http://localhost:8082/ratings/users/" + userId)
+                .retrieve()
+                .bodyToMono(UserRating.class)
+                .block();
 
-        return ratings.stream().map(rating -> {
+        return ratings.getUserRatings().stream().map(rating -> {
                     Movie movie = webClientBuilder.build()
                             .get()
                             .uri("http://localhost:8081/movies/" + rating.getMovieId())
