@@ -21,12 +21,17 @@ public class MovieResource {
     @Autowired
     private RestTemplate restTemplate;
 
-    @RequestMapping(value = "/{movieId}", produces = MediaType.APPLICATION_JSON)
-    public Movie getMovieInfo(@PathVariable("movieId") long movieId) {
+    @RequestMapping(value = "/moviedb/{movieId}", produces = MediaType.APPLICATION_JSON)
+    public Movie getMovieInfoFromDb(@PathVariable("movieId") long movieId) {
         MovieSummary summary = restTemplate.getForObject(
                 "https://api.themoviedb.org/3/movie/"+ movieId + "?api_key=" + apiKey,
                 MovieSummary.class
         );
         return new Movie(movieId, summary.getTitle(), summary.getOverview());
+    }
+
+    @RequestMapping(value = "/{movieId}", produces = MediaType.APPLICATION_JSON)
+    public Movie getMovieInfo(@PathVariable("movieId") long movieId) {
+        return new Movie(movieId, "Test title", "Test descrpition");
     }
 }
