@@ -15,19 +15,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class MicroserviceFilmApplication {
 
 
-
-    @Bean
-    @LoadBalanced
-    public RestTemplate getRestTemplate(){
-        return new RestTemplate();
-    }
-
-    @Bean
-    @LoadBalanced
-    public WebClient.Builder getWebClientBuilder() {
-        return WebClient.builder();
-    }
-
     public static void main(String[] args) {
         SpringApplication.run(MicroserviceFilmApplication.class, args);
     }
