@@ -1,23 +1,17 @@
 package com.test.microservicefilm.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserRating {
 
     private List<Rating> userRatings;
 
-    public UserRating() {
-    }
 
-    public UserRating(List<Rating> userRatings) {
-        this.userRatings = userRatings;
-    }
-
-    public List<Rating> getUserRatings() {
-        return userRatings;
-    }
-
-    public void setUserRatings(List<Rating> userRatings) {
-        this.userRatings = userRatings;
-    }
 }
