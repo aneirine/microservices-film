@@ -1,4 +1,4 @@
-package com.test.movieinfo.models;
+package com.test.microservicefilm.models;
 
 public class Movie {
 
