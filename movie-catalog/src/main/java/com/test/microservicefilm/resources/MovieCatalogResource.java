@@ -14,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,19 +35,19 @@ public class MovieCatalogResource {
         return getUserRating(userId).getUserRatings().stream().map(rating -> getCatalogItem(rating)).collect(Collectors.toList());
     }
 
-    @HystrixCommand(fallbackMethod = "throwDefaultCatalogItem")
+
     private CatalogItem getCatalogItem(Rating rating) {
         Movie movie = restTemplate.getForObject("http://movie-info-service/movies/" + rating.getMovieId(), Movie.class);
         return new CatalogItem(movie.getName(), "test desc", rating.getRating());
     }
 
-    @HystrixCommand(fallbackMethod = "throwDefaultUserRating")
+
     private UserRating getUserRating(String userId) {
         return webClientBuilder.build()
-                    .get().uri("http://movie-ratings-service/ratings/users/" + userId)
-                    .retrieve()
-                    .bodyToMono(UserRating.class)
-                    .block();
+                .get().uri("http://movie-ratings-service/ratings/users/" + userId)
+                .retrieve()
+                .bodyToMono(UserRating.class)
+                .block();
     }
 
     public List<CatalogItem> throwDefaultList(@PathVariable("userId") String userId) {
@@ -57,11 +56,5 @@ public class MovieCatalogResource {
         );
     }
 
-    public UserRating throwDefaultUserRating(String userId){
-        return new UserRating(new ArrayList<>());
-    }
 
-    public CatalogItem throwDefaultCatalogItem(Rating rating){
-        return new CatalogItem("Default title", "Default desc", rating.getRating());
-    }
 }
