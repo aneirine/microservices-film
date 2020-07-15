@@ -1,6 +1,7 @@
 package com.test.microservicefilm.services;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.test.microservicefilm.models.UserRating;
 import com.test.microservicefilm.resources.MovieRatingFeignService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class UserRatingInfoService {
     }
 
 
-    public UserRating getFallbackUserRatings(String userId){
+    public UserRating getFallbackUserRatings(String userId) {
         return new UserRating(new ArrayList<>());
     }
 

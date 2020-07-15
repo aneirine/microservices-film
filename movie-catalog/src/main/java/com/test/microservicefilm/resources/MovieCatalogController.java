@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/catalog")
-public class MovieCatalogResource {
+public class MovieCatalogController {
 
     @Autowired
     private MovieInfoService movieInfoService;
