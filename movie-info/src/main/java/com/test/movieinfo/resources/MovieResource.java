@@ -1,6 +1,6 @@
 package com.test.movieinfo.resources;
 
-import com.test.movieinfo.models.Movie;
+import com.test.movieinfo.services.MovieService;
 import com.test.movieinfo.services.TheMovieDBService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,13 +18,16 @@ public class MovieResource {
     @Autowired
     private TheMovieDBService movieDBService;
 
+    @Autowired
+    private MovieService movieService;
+
     @RequestMapping(value = "/moviedb/{movieId}", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity getMovieInfoFromDb(@PathVariable("movieId") long movieId) {
         return new ResponseEntity(movieDBService.getMovieInfoFromDb(movieId), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{movieId}", produces = MediaType.APPLICATION_JSON)
-    public Movie getMovieInfo(@PathVariable("movieId") long movieId) {
-        return new Movie(movieId, "Test title", "Test descrpition");
+    public ResponseEntity getMovieInfo(@PathVariable("movieId") long movieId) {
+        return new ResponseEntity(movieService.getMovieInfo(movieId), HttpStatus.OK);
     }
 }
