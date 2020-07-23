@@ -1,13 +1,13 @@
 package com.test.movieinfo.resources;
 
 import com.test.movieinfo.models.Movie;
-import com.test.movieinfo.models.MovieSummary;
+import com.test.movieinfo.services.TheMovieDBService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import javax.ws.rs.core.MediaType;
 
@@ -15,19 +15,12 @@ import javax.ws.rs.core.MediaType;
 @RequestMapping("/movies")
 public class MovieResource {
 
-    @Value("${api.key}")
-    private String apiKey;
-
     @Autowired
-    private RestTemplate restTemplate;
+    private TheMovieDBService movieDBService;
 
     @RequestMapping(value = "/moviedb/{movieId}", produces = MediaType.APPLICATION_JSON)
-    public Movie getMovieInfoFromDb(@PathVariable("movieId") long movieId) {
-        MovieSummary summary = restTemplate.getForObject(
-                "https://api.themoviedb.org/3/movie/"+ movieId + "?api_key=" + apiKey,
-                MovieSummary.class
-        );
-        return new Movie(movieId, summary.getTitle(), summary.getOverview());
+    public ResponseEntity getMovieInfoFromDb(@PathVariable("movieId") long movieId) {
+        return new ResponseEntity(movieDBService.getMovieInfoFromDb(movieId), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{movieId}", produces = MediaType.APPLICATION_JSON)
