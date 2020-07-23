@@ -1,5 +1,6 @@
 package com.test.movieinfo.services;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.test.movieinfo.models.Movie;
 import com.test.movieinfo.models.MovieSummary;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,16 @@ public class TheMovieDBService {
     private String apiKey;
 
 
+    @HystrixCommand(fallbackMethod = "getDefaultMovieInfoFromDB")
     public Movie getMovieInfoFromDb(long movieId) {
         MovieSummary summary = restTemplate.getForObject(
                 "https://api.themoviedb.org/3/movie/"+ movieId + "?api_key=" + apiKey,
                 MovieSummary.class
         );
         return new Movie(movieId, summary.getTitle(), summary.getOverview());
+    }
+
+    public Movie getDefaultMovieInfoFromDB(long movieId){
+        return new Movie(movieId, "Fallback", "Fallback");
     }
 }
