@@ -21,7 +21,7 @@ public class UserRatingInfoService {
     }
 
 
-    public UserRating getFallbackUserRatings(String userId) {
+    public UserRating getFallbackUserRatings(String userId)  {
         return new UserRating(new ArrayList<>());
     }
 
