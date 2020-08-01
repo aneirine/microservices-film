@@ -1,10 +1,14 @@
 package com.test.movieratings.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
-@Data
+
+
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class Rating {
 
     private long movieId;
