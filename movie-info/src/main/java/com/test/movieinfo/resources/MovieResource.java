@@ -34,6 +34,6 @@ public class MovieResource {
 
     @GetMapping(value = "/ratings/movie/{movieId}", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity getMovieInfoWithRating(@PathVariable("movieId") long movieId){
-        return new ResponseEntity(movieService.getMovieInfoWithRatings(), HttpStatus.OK);
+        return new ResponseEntity(movieService.getMovieInfoWithRatings(movieId), HttpStatus.OK);
     }
 }
