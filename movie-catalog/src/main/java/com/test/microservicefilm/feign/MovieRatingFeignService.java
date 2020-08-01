@@ -1,4 +1,4 @@
-package com.test.microservicefilm.resources;
+package com.test.microservicefilm.feign;
 
 import com.test.microservicefilm.models.UserRating;
 import org.springframework.cloud.openfeign.FeignClient;

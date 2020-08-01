@@ -1,4 +1,4 @@
-package com.test.microservicefilm.resources;
+package com.test.microservicefilm.feign;
 
 import com.test.microservicefilm.models.Movie;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;

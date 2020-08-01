@@ -4,7 +4,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.test.microservicefilm.models.CatalogItem;
 import com.test.microservicefilm.models.Movie;
 import com.test.microservicefilm.models.Rating;
-import com.test.microservicefilm.resources.MovieInfoFeignService;
+import com.test.microservicefilm.feign.MovieInfoFeignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
