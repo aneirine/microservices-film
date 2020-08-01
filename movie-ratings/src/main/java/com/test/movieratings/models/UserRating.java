@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 public class UserRating {
 
+    private long id;
     private List<Rating> userRatings;
 
 
