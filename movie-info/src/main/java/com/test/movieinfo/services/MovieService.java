@@ -19,4 +19,8 @@ public class MovieService {
     public Movie getDefaultMovieInfo(long movieId){
         return new Movie(movieId, "Fallback default", "Fallback default");
     }
+
+    public Object getMovieInfoWithRatings() {
+        return null;
+    }
 }
