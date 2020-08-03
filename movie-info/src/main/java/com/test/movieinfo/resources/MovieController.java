@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 
 @RestController
 @RequestMapping("/movies")
-public class MovieResource {
+public class MovieController {
 
     @Autowired
     private TheMovieDBService movieDBService;
@@ -22,12 +22,12 @@ public class MovieResource {
     @Autowired
     private MovieService movieService;
 
-    @RequestMapping(value = "/moviedb/{movieId}", produces = MediaType.APPLICATION_JSON)
+    @GetMapping(value = "/moviedb/{movieId}", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity getMovieInfoFromDb(@PathVariable("movieId") long movieId) {
         return new ResponseEntity(movieDBService.getMovieInfoFromDb(movieId), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{movieId}", produces = MediaType.APPLICATION_JSON)
+    @GetMapping(value = "/{movieId}", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity getMovieInfo(@PathVariable("movieId") long movieId) {
         return new ResponseEntity(movieService.getMovieInfo(movieId), HttpStatus.OK);
     }
