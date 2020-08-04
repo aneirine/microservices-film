@@ -49,6 +49,20 @@
             <version>2.2.3.RELEASE</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-sleuth-zipkin -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-sleuth-zipkin</artifactId>
+            <version>2.2.4.RELEASE</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-bus-amqp -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+            <version>2.2.3.RELEASE</version>
+        </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-hystrix -->
         <dependency>
@@ -62,7 +76,6 @@
             <artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
             <version>2.2.3.RELEASE</version>
         </dependency>
-
 
 
         <dependency>
@@ -83,7 +96,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
-
 
 
         <dependency>
