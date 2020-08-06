@@ -29,7 +29,9 @@ public class MovieCatalogController {
     @RequestMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON)
     @HystrixCommand(fallbackMethod = "getFallbackList")
     public List<CatalogItem> getCatalog(@PathVariable("userId") String userId) {
-        return userRatingInfoService.getUserRating(userId).getUserRatings().stream().map(rating -> movieInfoService.getCatalogItem(rating)).collect(Collectors.toList());
+        return userRatingInfoService.getUserRating(userId).getUserRatings()
+            .stream().map(rating -> movieInfoService.getCatalogItem(rating))
+            .collect(Collectors.toList());
     }
 
     public List<CatalogItem> getFallbackList(@PathVariable("userId") String userId) {
